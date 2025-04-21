@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
         "jsonify",
-        "ollama"
+        "ollama",
+        "pycache",
+        "venv"
     ]
 }

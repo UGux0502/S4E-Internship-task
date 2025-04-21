@@ -9,13 +9,12 @@ def index():
     title = ""
 
     if request.method == "POST":
-        user_input = request.form["user_input"]
+        user_input = request.json.get["user_input"]
         code_output, title = query_ollama(user_input)
         lines = code_output.strip().split('\n')
         title = lines[0] if lines[0].lower().startswith('title:') else "Generated Code"
         code_output = '\n'.join(lines[1:]) if title != "Generated Code" else code_output
-    return render_template("index.html", code_output=code_output, title=title)
-
+        return jsonify({"title": title, "code_output": code_output})
 
 
 
