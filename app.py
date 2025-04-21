@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import Flask, render_template, request , jsonify
+from flask import Flask, request , jsonify
 from model import query_ollama
 app = Flask(__name__)
 

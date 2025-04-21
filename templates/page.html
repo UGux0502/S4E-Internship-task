@@ -68,6 +68,14 @@
             const outputDiv = document.getElementById('output');
             outputDiv.innerHTML = '<p class="info">Processing...</p>';
 
+            fetch("/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ user_input: code })
+            })
+            .then(response => response.json())
             
             setTimeout(() => {
                 const response = {
@@ -79,9 +87,12 @@
                 if (response.success) {
                     outputDiv.innerHTML = `<p class="success">${response.message}</p><pre>${response.result}</pre>`;
                 } else {
-                    outputDiv.innerHTML = `<p class="error">${response.message}</p>`;
+                    outputDiv.innerHTML = `<p class="error">Failed to generate code.</p>`;
                 }
-            }, 2000);
+            })
+            .catch(error => {
+                outputDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
+            });
         }
     </script>
 </body>
