@@ -1,15 +1,18 @@
-from flask import Flask
-from flask import Flask, request , jsonify
+from flask import Flask, request , jsonify , render_template
+from flask_cors import CORS
 from model import query_ollama
-app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+app = Flask(__name__)
+CORS(app)
+
+@app.route("/", methods=["GET" , "POST"])
 def index():
     code_output = ""
     title = ""
-
-    if request.method == "POST":
-        user_input = request.json.get["user_input"]
+    if request.method == "GET":
+        return render_template("page.html")
+    elif request.method == "POST":
+        user_input = request.json.get("user_input", "")
         code_output, title = query_ollama(user_input)
         lines = code_output.strip().split('\n')
         title = lines[0] if lines[0].lower().startswith('title:') else "Generated Code"
