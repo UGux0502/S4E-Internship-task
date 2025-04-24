@@ -5,26 +5,28 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #333;
         }
         h1 {
-            color: #333;
+            color: #ffffff;
+            margin:0;
+            text-align: center;
+            left: 50%;
+        }
+        label {
+            color: #ffffff;
+            font-size: 18px;
         }
         pre {
             background-color: #f4f4f4;
             padding: 10px;
             border-radius: 5px;
         }
-        .error {
-            color: red;
-        }
         .success {
             color: green;
         }
-        .warning {
-            color: orange;
-        }
         .info {
-            color: blue;
+            color: rgb(5, 180, 255);
         }
         .input {
             margin-bottom: 20px;
@@ -53,8 +55,8 @@
         }
     </style>
 </head>
-<body>
-    <h1>AI Python Code Assistant</h1>
+<body >
+    <h1 >AI Python Code Assistant</h1>
     <div class="input">
         <label for="code">Describe the code you want to create:</label>
         <textarea id="code" name="code"></textarea>
@@ -66,7 +68,7 @@
         function submitCode() {
             const code = document.getElementById('code').value;
             const outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = '<p class="info">Processing...</p>';
+            outputDiv.innerHTML = '<p  class="info">Processing...</p>';
 
             fetch("/", {
                 method: "POST",
@@ -78,7 +80,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.title && data.code_output) {
-                    outputDiv.innerHTML = `<p class="success">Title: ${data.title}</p><pre>${data.code_output}</pre>`;
+                    outputDiv.innerHTML = `<p class="success"> ${data.title}</p><pre>${data.code_output}</pre>`;
                 } else {
                     outputDiv.innerHTML = `<p class="error">Failed to generate code.</p>`;
                 }
