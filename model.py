@@ -3,23 +3,40 @@ import requests
 def query_ollama(input_text):
     url = "http://localhost:11434/v1/chat/completions"
     
+    
     input_text_system = (
-        "you are a helpful assistant. "
-        "You Write python code for the user. "
-        "Generate the code based on the description below. "
-        "Return only Python code and a title summarizing the job."
-        "Just answer for code question nothing else. "
-        "Do not include any explanation or additional information. "
-     )
+        "You are an AI assistant specialized in generating Python code. "
+        "Your task is to write Python code based on the user's description. "
+        "The response must include a title summarizing the task, followed by the Python code. "
+        "The title should be prefixed with 'Title:' and be concise. "
+        "The Python code should be well-formatted and functional. "
+        "Do not include any explanations, comments, or additional text outside the title and code. "
+        "Ensure the code is syntactically correct and adheres to best practices. "
+        "If the user's description is unclear, make reasonable assumptions to generate the code."
+    )
+    
+    
+    messages = [
+        {"role": "system", "content": input_text_system},
+        {"role": "user", "content": input_text}
+    ]
+    
+    
     data = {
-        "model": "codellama",
-        "prompt": f"{input_text_system}\n\nUser prompt: {input_text}",
+        "model": "llama3",
+        "messages": messages,
         "stream": False
     }
+    
+    
     response = requests.post(url, json=data)
     response.raise_for_status()
     result = response.json()
-    print("api data: ", response)
+    
+    
+    print("API Response JSON:", result)
+    
+    
     if "choices" in result and len(result["choices"]) > 0:
         content = result["choices"][0]["message"]["content"]
         lines = content.strip().split('\n')
