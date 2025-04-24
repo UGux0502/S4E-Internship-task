@@ -40,6 +40,8 @@ def query_ollama(input_text):
         content = result["choices"][0]["message"]["content"]
         lines = content.strip().split('\n')
         title = lines[0] if lines[0].lower().startswith('title:') else "Generated Code"
+
+        
         code_output = '\n'.join(lines[1:]) if title != "Generated Code" else content
         return code_output, title
     

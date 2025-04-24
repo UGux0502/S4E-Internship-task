@@ -80,7 +80,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.title && data.code_output) {
-                    outputDiv.innerHTML = `<p class="success"> ${data.title}</p><pre>${data.code_output}</pre>`;
+                    outputDiv.innerHTML = `<p class="success"> ${data.title}</p><pre id="GenCode">${data.code_output}</pre><button onclick="copyToClipboard()">Copy the Code</button>`;
                 } else {
                     outputDiv.innerHTML = `<p class="error">Failed to generate code.</p>`;
                 }
@@ -89,6 +89,14 @@
                 outputDiv.innerHTML = `<p class="error">Error: ${error.message}</p>`;
             });
         }
+        function copyToClipboard() {
+                const codeOutput = document.querySelector('#GenCode').innerText;
+                navigator.clipboard.writeText(codeOutput).then(() => {
+                    alert('Code copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            }
 
         document.getElementById('code').addEventListener('keydown', function(event) {
             if (event.key === 'Enter' && !event.shiftKey) {
