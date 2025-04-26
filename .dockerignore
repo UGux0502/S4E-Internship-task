@@ -1,0 +1,78 @@
+# Python bytecode and cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.coverage
+
+# Virtual environments
+venv/
+
+# IDE/editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Version control
+.git/
+.gitignore
+
+# System files
+.DS_Store
+
+# Environment and secrets
+.env*
+*.env
+*.pem
+*.key
+*.crt
+
+# Local configuration
+config.local.*
+*.local.yml
+.local/
+
+# Build and distribution outputs
+dist/
+build/
+out/
+tmp/
+temp/
+*.tmp
+
+# Documentation
+README*
+*.md
+docs/
+
+# Docker and deployment
+Dockerfile*
+docker-compose*
+deployment.yaml
+
+# Test files and folders
+test/
+tests/
+
+# Templates (if not needed in container, comment out if needed)
+# templates/
+
+# Miscellaneous
+*.log
+debug/
+
+# Node.js (not detected, but included for completeness)
+node_modules/
+npm-debug.log
+yarn-debug.log
+
+# Go (not detected, but included for completeness)
+/vendor/
+*.test
+.go-cache/
+
+# Java (not detected, but included for completeness)
+target/
+*.class
+.gradle/

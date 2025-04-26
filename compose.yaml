@@ -1,0 +1,14 @@
+services:
+  python-app:
+    build:
+      context: .
+    container_name: python-app
+    restart: unless-stopped
+    init: true
+    ports:
+      - "5000:5000"  # Flask default port as exposed in Dockerfile
+    # env_file: ./.env  # Uncomment if .env file exists
+    # No external dependencies detected in README or code
+    # No volumes needed as there are no databases or persistent data requirements
+    # The service runs as a non-root user as per Dockerfile
+    # The app uses Flask and runs app.py as entrypoint
