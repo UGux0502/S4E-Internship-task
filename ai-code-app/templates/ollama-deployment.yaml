@@ -35,8 +35,8 @@ spec:
               value: "http://ai-code-app,http://ai-code-app:5000,http://localhost,http://localhost:*,http://0.0.0.0:*"
           resources:
             requests:
-              cpu: "2"
-              memory: "2Gi"
-            limits:
               cpu: "4"
-              memory: "5Gi"
+              memory: "6Gi"
+            limits:
+              cpu: "8"
+              memory: "10Gi"

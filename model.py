@@ -6,17 +6,17 @@ import os
 
 def get_available_models():
     """Query Ollama API to get a list of available models"""
-    # Get the Ollama host from environment variable, with fallback to localhost
+
     ollama_host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
     
-    # Make sure the port is specified
+
     if "://" in ollama_host and ":11434" not in ollama_host:
         ollama_host = f"{ollama_host}:11434"
     
     url = f"{ollama_host}/api/tags"
     
     try:
-        # Request models list from Ollama
+
         max_retries = 3
         retry_delay = 2
         
@@ -27,7 +27,7 @@ def get_available_models():
                 response.raise_for_status()
                 
                 models_data = response.json()
-                # Extract model names from response
+
                 if "models" in models_data:
                     return [model["name"] for model in models_data["models"]]
                 return []
@@ -52,16 +52,16 @@ def get_available_models():
         return []
 
 def query_ollama(input_text, model="llama3.2"):
-    # Get the Ollama host from environment variable, with fallback to localhost
+
     ollama_host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
     
-    # Make sure the port is specified
+
     if "://" in ollama_host and ":11434" not in ollama_host:
         ollama_host = f"{ollama_host}:11434"
     
     url = f"{ollama_host}/api/generate"
     
-    # Debug information
+
     print(f"Connecting to Ollama at: {url}")
 
     if(model == "tinyllama"):
@@ -140,11 +140,11 @@ class Job(Task):
     data = {
         "model": model,
         "prompt": input_text_system + "\n\n" + input_text,
-        "stream": True  # Changed to True to use streaming mode
+        "stream": True  
     }
 
     try:
-        # Increased timeout and added retries
+
         max_retries = 3
         retry_delay = 2
         
@@ -154,7 +154,7 @@ class Job(Task):
                 response = requests.post(url, json=data, timeout=60, stream=True)  # Increased timeout and enabled streaming
                 response.raise_for_status()
                 
-                # Process the streaming response
+
                 full_content = ""
                 for line in response.iter_lines():
                     if line:
@@ -166,7 +166,7 @@ class Job(Task):
                                 content = chunk["response"]
                                 full_content += content
                             
-                            # Check if streaming is complete
+
                             if chunk.get("done", False):
                                 break
                         except json.JSONDecodeError as e:
@@ -175,7 +175,7 @@ class Job(Task):
                 
                 print(f"Final content length: {len(full_content)}")
                 
-                # Process the final content
+
                 if full_content:
                     lines = full_content.strip().split('\n')
                     title = lines[0] if lines and lines[0].lower().startswith('title:') else "Generated Code"

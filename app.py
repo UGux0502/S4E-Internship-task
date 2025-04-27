@@ -3,6 +3,7 @@ from flask_cors import CORS
 from model import query_ollama, get_available_models
 import logging
 import os
+import requests
 
 def warm_up_ollama():
     ollama_host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
@@ -13,7 +14,7 @@ def warm_up_ollama():
 
     try:
         response = requests.post(url, json={
-            "model": "tinyllama",  # veya sen hangi modeli kullanıyorsan
+            "model": "tinyllama",  
             "prompt": "Say Hello",
             "stream": False
         }, timeout=10)
@@ -27,7 +28,7 @@ app = Flask(__name__)
 warm_up_ollama()
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-# Configure logging
+
 logging.basicConfig(level=logging.DEBUG)
 
     
@@ -37,7 +38,7 @@ def index():
     app.logger.debug(f"Headers: {dict(request.headers)}")
     
     if request.method == "GET":
-        # Get available models for the dropdown
+        
         models = get_available_models()
         app.logger.debug(f"Available models: {models}")
         return render_template("page.html", models=models)

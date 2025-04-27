@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Custom select styling to fix Safari issues */
+
         .custom-select-wrapper {
             position: relative;
         }
@@ -130,11 +130,11 @@
     </footer>
 
     <script>
-        // Function to fetch models from API if not provided by the server
+
         async function fetchModels() {
             const modelSelect = document.getElementById('model');
             
-            // Only fetch if no models were rendered by the server
+
             if (modelSelect.options.length <= 1) {
                 try {
                     const response = await fetch('/models');
@@ -160,21 +160,21 @@
             }
         }
         
-        // Call fetchModels when the page loads
+
         document.addEventListener('DOMContentLoaded', function() {
-            // Fetch models when the page loads
+
             fetchModels();
             
-            // Add event listeners to sample prompt buttons
+
             document.querySelectorAll('.sample-prompt-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const promptText = this.getAttribute('data-prompt');
                     document.getElementById('code').value = promptText;
                     
-                    // Optional: Focus the textarea after setting the prompt
+
                     document.getElementById('code').focus();
                     
-                    // Visual feedback for the selected button
+
                     document.querySelectorAll('.sample-prompt-btn').forEach(btn => {
                         btn.classList.remove('bg-cyan-700', 'text-white');
                         btn.classList.add('bg-gray-700', 'text-gray-300');
@@ -192,7 +192,7 @@
             errorMessage.textContent = message;
             errorContainer.classList.remove('hidden');
             
-            // Hide output if it's visible
+
             document.getElementById('output').classList.add('hidden');
         }
         
@@ -211,7 +211,7 @@
             
             hideError();
             
-            // Show loading indicator
+            
             const spinner = document.getElementById('loading-spinner');
             spinner.classList.remove('hidden');
             
@@ -236,7 +236,7 @@
                 }
 
                 const data = await response.json();
-                console.log('Response data:', data);  // Debug log
+                console.log('Response data:', data);  
 
                 if (data.error) {
                     throw new Error(data.error);
@@ -254,10 +254,10 @@
                     throw new Error('Invalid response format from server');
                 }
             } catch (error) {
-                console.error('Error:', error);  // Debug log
+                console.error('Error:', error);  
                 showError(error.message);
             } finally {
-                // Hide loading indicator
+
                 spinner.classList.add('hidden');
             }
         }
@@ -265,7 +265,7 @@
         function copyToClipboard() {
             const codeOutput = document.querySelector('#GenCode').textContent;
             navigator.clipboard.writeText(codeOutput).then(() => {
-                // Visual feedback for copy
+
                 const copyButton = document.querySelector('button[onclick="copyToClipboard()"]');
                 const originalText = copyButton.innerHTML;
                 
