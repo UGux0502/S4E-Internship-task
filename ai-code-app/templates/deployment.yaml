@@ -42,6 +42,8 @@ spec:
               value: "{{ .Values.env.FLASK_RUN_HOST }}"
             - name: FLASK_ENV
               value: "{{ .Values.env.FLASK_ENV }}"
+            - name: OLLAMA_HOST
+              value: "http://{{ include "ai-code-app.fullname" . }}-ollama"
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
